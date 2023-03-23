@@ -1,0 +1,12 @@
+name: main
+
+on: push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show error message on foo.txt
+        run: echo "::error file=foo.txt,line=1,col=1,endColumn=3::This is the foo.txt file."
+      - name: Show error message on bar.txt
+        run: echo "::error file=bar.txt,line=1,col=1,endColumn=3::This is the bar.txt file."
