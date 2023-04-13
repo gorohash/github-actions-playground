@@ -9,5 +9,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: |
+          git config --global --list
           echo "HOME: $HOME"
           cat "$HOME/.gitconfig"
