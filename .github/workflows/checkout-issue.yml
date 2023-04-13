@@ -1,0 +1,13 @@
+name: 'actions/checkout #1169'
+
+on: push
+
+jobs:
+
+  checkout:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          echo "HOME: $HOME"
+          cat "$HOME/.gitconfig"
