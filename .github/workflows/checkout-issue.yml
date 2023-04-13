@@ -7,15 +7,8 @@ jobs:
   checkout:
     runs-on: ubuntu-latest
     container:
-      image: alpine/git:latest
+      image: alpine:latest
     steps:
       - uses: actions/checkout@v3
-      - run: |
-          git config --global user.email "test@example.com"
-          git config --global user.name "test"
-      - run: git config --global --list
-      - run: git commit --allow-empty -m "test"
-      - run: |
-          git config --global --list
-          echo "HOME: $HOME"
-          cat "$HOME/.gitconfig"
+      - run: echo "$PWD"
+      - run: echo "$GITHUB_WORKSPACE"
