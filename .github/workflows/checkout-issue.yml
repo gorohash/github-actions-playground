@@ -10,7 +10,13 @@ jobs:
       image: alpine/git:latest
     steps:
       - run: git config --global --add safe.directory "${{ github.workspace }}"
+      - run: |
+          echo "${{ github.workspace }}"
+          git config --global --list
       - uses: actions/checkout@v3
+      - run: |
+          echo "${{ github.workspace }}"
+          git config --global --list
       - run: |
           git config --global user.email "test@example.com"
           git config --global user.name "test"
