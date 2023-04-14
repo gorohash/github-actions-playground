@@ -6,7 +6,12 @@ jobs:
 
   checkout:
     runs-on: ubuntu-latest
+    container:
+      image: alpine/git:latest
     steps:
+      - run: git config --global --add safe.directory "${{ github.workspace }}"
       - uses: actions/checkout@v3
-      - run: echo "$PWD"
-      - run: echo "$GITHUB_WORKSPACE"
+      - run: |
+          git config --global user.email "test@example.com"
+          git config --global user.name "test"
+          git commit --allow-empty -m "test"
