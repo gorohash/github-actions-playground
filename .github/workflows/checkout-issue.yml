@@ -1,29 +1,13 @@
-name: 'actions/checkout #1169'
-
+name: Minimal example
 on: push
-
 jobs:
-
-  checkout:
+  commit:
     runs-on: ubuntu-latest
-    container:
-      image: alpine/git:latest
+    container: alpine/git:latest
     steps:
-      - run: git config --global --add safe.directory "${GITHUB_WORKSPACE}"
-      - run: |
-          echo "github.workspace: ${{ github.workspace }}"
-          echo "GITHUB_WORKSPACE: ${GITHUB_WORKSPACE}"
-          echo "runner.workspace: ${{ runner.workspace }}"
-          echo "RUNNER_WORKSPACE: ${RUNNER_WORKSPACE}"
-          git config --global --list
       - uses: actions/checkout@v3
-      - run: |
-          echo "github.workspace: ${{ github.workspace }}"
-          echo "GITHUB_WORKSPACE: ${GITHUB_WORKSPACE}"
-          echo "runner.workspace: ${{ runner.workspace }}"
-          echo "RUNNER_WORKSPACE: ${RUNNER_WORKSPACE}"
-          git config --global --list
-      - run: |
+      - name: Empty commit
+        run: |
           git config --global user.email "test@example.com"
           git config --global user.name "test"
           git commit --allow-empty -m "test"
