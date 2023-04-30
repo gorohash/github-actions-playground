@@ -13,9 +13,12 @@ jobs:
       - run: |
           mkdir node-${{ matrix.node-version }}
           node -v > node-${{ matrix.node-version }}/version.txt
+          touch .dummy-node-${{ matrix.node-version }}
       - uses: actions/upload-artifact@v3
         with:
-          path: node-${{ matrix.node-version }}/version.txt
+          path: |
+            node-${{ matrix.node-version }}/version.txt
+            .dummy-node-${{ matrix.node-version }}
   check-artifact:
     needs: output-node-version
     runs-on: ubuntu-latest
@@ -24,5 +27,5 @@ jobs:
         with:
           name: artifact
       - run: |
-          echo "$ ls"
-          ls
+          echo "$ ls -a"
+          ls -a
