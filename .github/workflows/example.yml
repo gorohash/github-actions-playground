@@ -1,23 +1,24 @@
 name: Example workflow
 on: push
 jobs:
-  overwrite-artifact:
+  job-a:
     runs-on: ubuntu-latest
     steps:
-      - run: echo hi > world.txt
-      - uses: actions/upload-artifact@v3
-        with:
-          path: world.txt
-      - run: echo howdy > extra-file.txt
-      - uses: actions/upload-artifact@v3
-        with:
-          path: extra-file.txt
       - run: echo hello > world.txt
       - uses: actions/upload-artifact@v3
         with:
           path: world.txt
+  job-b:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo howdy > extra-file.txt
+      - uses: actions/upload-artifact@v3
+        with:
+          path: extra-file.txt
   check-artifact:
-    needs: overwrite-artifact
+    needs:
+      - job-a
+      - job-b
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v3
