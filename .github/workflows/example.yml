@@ -1,18 +1,23 @@
 name: Example workflow
 on: push
 jobs:
-  overwrite-artifact:
+  output-node-version:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        name: [a, b]
+        node-version: [14, 16, 18]
     steps:
-      - run: echo ${{ matrix.name }} > ${{ matrix.name }}.txt
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: |
+          mkdir node-${{ matrix.node-version }}
+          node -v > node-${{ matrix.node-version }}/version.txt
       - uses: actions/upload-artifact@v3
         with:
-          path: ${{ matrix.name }}.txt
+          path: node-${{ matrix.node-version }}/version.txt
   check-artifact:
-    needs: overwrite-artifact
+    needs: output-node-version
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v3
