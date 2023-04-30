@@ -1,0 +1,32 @@
+name: Example workflow
+on: push
+jobs:
+  overwrite-artifact:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo hi > world.txt
+      - uses: actions/upload-artifact@v3
+        with:
+          path: world.txt
+      - run: echo howdy > extra-file.txt
+      - uses: actions/upload-artifact@v3
+        with:
+          path: extra-file.txt
+      - run: echo hello > world.txt
+      - uses: actions/upload-artifact@v3
+        with:
+          path: world.txt
+  check-artifact:
+    needs: overwrite-artifact
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: artifact
+      - run: |
+          echo "$ ls"
+          ls
+          echo "$ cat world.txt"
+          cat world.txt
+          echo "$ cat extra-file.txt"
+          cat extra-file.txt
