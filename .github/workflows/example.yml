@@ -1,24 +1,18 @@
 name: Example workflow
 on: push
 jobs:
-  job-a:
+  overwrite-artifact:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        name: [a, b]
     steps:
-      - run: echo hello > world.txt
+      - run: echo ${{ matrix.name }} > ${{ matrix.name }}.txt
       - uses: actions/upload-artifact@v3
         with:
-          path: world.txt
-  job-b:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo howdy > extra-file.txt
-      - uses: actions/upload-artifact@v3
-        with:
-          path: extra-file.txt
+          path: ${{ matrix.name }}.txt
   check-artifact:
-    needs:
-      - job-a
-      - job-b
+    needs: overwrite-artifact
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v3
@@ -27,7 +21,3 @@ jobs:
       - run: |
           echo "$ ls"
           ls
-          echo "$ cat world.txt"
-          cat world.txt
-          echo "$ cat extra-file.txt"
-          cat extra-file.txt
