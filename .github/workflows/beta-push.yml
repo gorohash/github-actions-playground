@@ -1,0 +1,9 @@
+name: "[Beta Team] push trigger workflow"
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "This is push trigger workflow."
