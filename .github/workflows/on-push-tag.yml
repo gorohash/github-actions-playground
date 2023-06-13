@@ -1,0 +1,14 @@
+name: On push tag
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  test:
+    runs-on: [ self-hosted, internal-network ]
+    steps:
+      - run: |
+          echo "github.ref: ${{ github.ref }}"
+          echo "github.ref_name: ${{ github.ref_name }}"
