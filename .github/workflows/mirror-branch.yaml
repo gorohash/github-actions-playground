@@ -12,6 +12,4 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Mirror branch
-        run: |
-          git fetch origin preview
-          git push origin mirror-branch:preview
+        run: git push --force origin mirror-branch:preview
